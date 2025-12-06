@@ -6,8 +6,10 @@ name: aurora-nvidia-nordvpn
 description: This is my personal OS image.
 
 # the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 42 # latest is also supported if you want new updates ASAP
+#base-image: ghcr.io/ublue-os/silverblue-main
+#image-version: 42 # latest is also supported if you want new updates ASAP
+base-image: ghcr.io/ublue-os/aurora-dx-nvidia-open
+image-version: latest
 
 # module configuration, executed in order
 # you can include multiple instances of the same module
@@ -21,10 +23,18 @@ modules:
     repos:
       copr:
         - atim/starship
+      files:
+        - https://repo.nordvpn.com/yum/nordvpn/centos/x86_64/
+        - https://brave-browser-rpm-release.s3.brave.com/$basearch
+      keys:
+        - https://repo.nordvpn.com/gpg/nordvpn_public.asc
+        - https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
     install:
       packages:
         - micro
         - starship
+        - nordvpn
+        - brave-browser
     remove:
       packages:
         # example: removing firefox (in favor of the flatpak)
